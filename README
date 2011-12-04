@@ -1,0 +1,6 @@
+
+ArtByBit
+-----------
+Heroku App 
+
+An image recongition engine for European Artwork that uses an elementary perceptual hash to compare against a datbase of images.
