@@ -7,3 +7,5 @@ include
 lib
 .Python
 *.pyc
+.D*
+

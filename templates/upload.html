@@ -1,0 +1,28 @@
+<html>
+    <head>
+        <title>Upload new File</title>
+        <style>
+            body {
+                margin:50px 0px; padding:0px; /* Need to set body margin and padding to get consistency between browsers. */
+                text-align:center; /* Hack for IE5/Win */
+                }
+            #Content {
+                width:500px;
+                margin:0px auto; /* Right and left margin widths set to "auto" */
+                text-align:left; /* Counteract to IE5/Win Hack */
+                padding:15px;
+                border:1px dashed #333;
+                background-color:#eee;
+                }
+            </style>
+    </head>
+    <body>
+            <div id = "Content">
+                <h1>Upload new File</h1>
+                <form action="" method=post enctype=multipart/form-data>
+                        <input type=file name=file>
+                        <input type=submit value=Upload>
+                </form>
+            </div>
+    </body>
+</html>
