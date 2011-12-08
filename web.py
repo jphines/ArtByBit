@@ -1,8 +1,7 @@
-
 import os
 from flask import Flask, request, redirect, url_for, flash, render_template, send_from_directory
 from werkzeug import secure_filename
-from pHash import avhash, hamming
+import pHash
 
 UPLOAD_FOLDER = './upload'
 ALLOWED_EXTENSIONS = set(['jpg', 'jpeg', 'JPG', 'JPEG', 'gif', 'GIF', 'png', 'PNG'])
@@ -26,8 +25,9 @@ def upload_file():
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):
     image = app.config['UPLOAD_FOLDER']+ "/" + filename
-    hash = avhash("./upload/01475_fallenflower_1920x1080.jpg")
-    return hash
+    hash = pHash.avhash(image)
+
+    return "Image Hash: " + str(hash)
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))

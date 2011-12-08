@@ -8,4 +8,5 @@ lib
 .Python
 *.pyc
 .D*
-
+*.jpg
+test.py
