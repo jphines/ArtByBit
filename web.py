@@ -26,7 +26,7 @@ def upload_file():
 def uploaded_file(filename):
     image = app.config['UPLOAD_FOLDER']+ "/" + filename
     hash = pHash.avhash(image)
-
+    os.remove(image)
     return "Image Hash: " + str(hash)
 
 if __name__ == "__main__":
