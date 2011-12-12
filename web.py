@@ -10,7 +10,7 @@ db = connection.app1936919
 db.authenticate('heroku','herokuapp')
 collection = db.art
 
-CATALOG = "./testcat.csv"
+CATALOG = "./hash-catalog.csv"
 
 UPLOAD_FOLDER = './upload'
 ALLOWED_EXTENSIONS = set(['jpg', 'jpeg', 'JPG', 'JPEG', 'gif', 'GIF', 'png', 'PNG'])
@@ -47,7 +47,7 @@ def results(filename):
     for author, life, title, date, hash, technique, location, url, form, type in reader:
         h2 = int(hash)
         distance = pHash.hamming(h1,h2)
-        if distance < 4:
+        if distance < 9:
             body+= "<tr><td>Title</td><td><h3>" + title + "</h3></td></tr>"
             body+= "<tr><td>Masterpiece</td><td><img src = \"" +url + "\" /></td></tr>"
             body+= "<tr><td>Author</td><td>" + author + "</td></tr>"
