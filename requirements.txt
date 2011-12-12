@@ -1,3 +1,4 @@
 Flask==0.7.2
 gunicorn==0.12.2
 PIL
+pymongo
