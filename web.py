@@ -44,22 +44,43 @@ def results(filename):
     os.remove(image)
     reader = csv.reader(open(CATALOG, "rb"), delimiter=";")
     body = ""
+    list = []
+    list_count = 0
     for author, life, title, date, hash, technique, location, url, form, type in reader:
         h2 = int(hash)
         distance = pHash.hamming(h1,h2)
+        document = {'author':author,'life':life,'title':title,'date':date, 'hash':hash, \
+                'technique':technique, 'location':location, 'url':url, 'form':url,\
+                'type':type, 'distance':distance}
         if distance < 9:
-            body+= "<tr><td>Title</td><td><h3>" + title + "</h3></td></tr>"
-            body+= "<tr><td>Masterpiece</td><td><img src = \"" +url + "\" /></td></tr>"
-            body+= "<tr><td>Author</td><td>" + author + "</td></tr>"
-            body+= "<tr><td>Date</td><td>" + date + "</td></tr>"
-            body+= "<tr><td>Technique</td><td>" + technique + "</td></tr>"
-            body+= "<tr><td>Current Location</td><td>" + location + "</td></tr>"
-            body+= "<tr><td>Form</td><td>" + form + "</td></tr>"
-            body+= "<tr><td>Type</td><td>" + type + "</td></tr>"
-    if len(body) > 0:
+            confidence = (100 - int(distance)*5)
+            document = {'author':author,'life':life,'title':title,'date':date, 'hash':hash, \
+                    'technique':technique, 'location':location, 'url':url, 'form':url,\
+                    'type':type, 'confidence':confidence, 'distance':distance}
+            list.append(document)
+            list_count = list_count + 1
+    list = sorted(list, key=lambda v: v['distance'])
+    counter = 0
+    if  list_count > 0:
+        while (counter < 5 ) and counter != list_count:
+            document = list[counter]
+            body += htmlify( document)
+            counter = counter + 1
         return head + body + foot
     else:
         return render_template('not_found.html')
+
+def htmlify(document):
+    string = "<tr><td>Confidence Score</td><td><h2>" + str(document['confidence']) + "%</h2></td></tr>"
+    string+= "<tr><td>Title</td><td><h3>" + document['title'] + "</h3></td></tr>"
+    string+= "<tr><td>Masterpiece</td><td><img src = \"" +document['url'] + "\" /></td></tr>"
+    string+= "<tr><td>Author</td><td>" + document['author'] + "</td></tr>"
+    string+= "<tr><td>Date</td><td>" + document['date'] + "</td></tr>"
+    string+= "<tr><td>Technique</td><td>" + document['technique'] + "</td></tr>"
+    string+= "<tr><td>Current Location</td><td>" + document['location'] + "</td></tr>"
+    string+= "<tr><td>Form</td><td>" + document['form'] + "</td></tr>"
+    string+= "<tr><td>Type</td><td>" + document['type'] + "</td></tr>"
+    return  string
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
